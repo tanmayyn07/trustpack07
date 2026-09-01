@@ -15,261 +15,342 @@
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f7fb;
+    background: #f5f7fa;
     color: #172033;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-header {
-    background: white;
-    border-bottom: 1px solid #e5e9f0;
-    padding: 18px 5%;
+.page {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 28px 22px 40px;
 }
 
-.header-inner {
-    max-width: 1200px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.top-space {
+    height: 5px;
+    background: #155b82;
+    border-radius: 0 0 8px 8px;
+    margin-bottom: 22px;
 }
 
-.logo {
-    font-size: 25px;
-    font-weight: 800;
-    color: #126b50;
-}
-
-.subtitle {
-    color: #697386;
-    font-size: 13px;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 0 20px;
-}
-
-.grid {
+.main-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 18px;
 }
 
-.card {
+.panel {
     background: white;
     border-radius: 16px;
-    padding: 25px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+    border: 1px solid #e6ebf1;
+    overflow: hidden;
 }
 
-h2 {
-    margin-top: 0;
+.left-panel,
+.right-panel {
+    padding: 22px;
 }
 
-.upload-area {
-    border: 2px dashed #c9d2df;
-    border-radius: 14px;
-    padding: 45px 20px;
+h1 {
+    font-size: 20px;
+    margin: 0 0 6px;
+}
+
+.description {
+    color: #687386;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+}
+
+.tabs {
+    display: flex;
+    background: #eef2f7;
+    border-radius: 10px;
+    padding: 3px;
+    margin-bottom: 15px;
+}
+
+.tab {
+    width: 50%;
+    text-align: center;
+    padding: 10px;
+    font-size: 12px;
+    color: #657286;
+}
+
+.tab.active {
+    background: white;
+    border-radius: 8px;
+    color: #172033;
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+
+.upload-box {
+    border: 2px dashed #d4dce6;
+    border-radius: 12px;
+    min-height: 165px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     cursor: pointer;
-    transition: 0.2s;
+    transition: .2s;
 }
 
-.upload-area:hover {
-    border-color: #126b50;
-    background: #f6fbf9;
+.upload-box:hover,
+.upload-box.dragging {
+    border-color: #176c98;
+    background: #f7fbfd;
 }
 
 .upload-icon {
-    font-size: 40px;
-    margin-bottom: 10px;
+    font-size: 27px;
+    margin-bottom: 8px;
 }
 
-input[type="file"] {
+.upload-main {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.upload-sub {
+    font-size: 11px;
+    color: #7a8494;
+    margin-top: 6px;
+}
+
+#fileInput {
     display: none;
+}
+
+.preview-container {
+    margin-top: 12px;
+    border: 1px solid #e0e5ec;
+    border-radius: 10px;
+    min-height: 200px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: #fafbfc;
+    overflow: hidden;
+}
+
+#preview {
+    max-width: 100%;
+    max-height: 330px;
+    object-fit: contain;
+    display: block;
+}
+
+.buttons {
+    display: flex;
+    gap: 9px;
+    margin-top: 11px;
 }
 
 button {
     border: 0;
     border-radius: 9px;
-    padding: 12px 18px;
-    font-size: 14px;
+    padding: 10px 17px;
     font-weight: 700;
+    font-size: 12px;
     cursor: pointer;
 }
 
-.primary {
-    background: #126b50;
+.analyse {
+    background: #123f63;
     color: white;
 }
 
-.secondary {
-    background: #edf2f7;
-    color: #26364a;
+.clear {
+    background: #eaf0f6;
+    color: #23405b;
+}
+
+.example-btn {
+    background: #f0f5f8;
+    color: #34546b;
 }
 
 button:disabled {
-    opacity: 0.5;
+    opacity: .5;
     cursor: not-allowed;
 }
 
-.actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-    flex-wrap: wrap;
-}
-
-.preview {
-    width: 100%;
-    max-height: 430px;
-    object-fit: contain;
-    margin-top: 20px;
-    border-radius: 10px;
-    background: #f3f5f8;
+.assessment {
+    color: #13805a;
+    font-size: 12px;
+    margin-top: 12px;
     display: none;
 }
 
-.progress {
-    margin-top: 15px;
-    display: none;
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    margin-top: 14px;
 }
 
-.progress-bar {
-    width: 100%;
-    height: 8px;
-    background: #e5e9ef;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    width: 0%;
-    background: #126b50;
-    transition: width .2s;
-}
-
-.status {
-    margin-top: 8px;
-    color: #697386;
-    font-size: 13px;
-}
-
-.scan-box {
-    margin-top: 20px;
-}
-
-.scan-title {
-    font-weight: 700;
-    margin-bottom: 8px;
-}
-
-textarea {
-    width: 100%;
-    min-height: 190px;
-    resize: vertical;
-    border: 1px solid #d8dee8;
-    border-radius: 10px;
-    padding: 14px;
-    font-family: Consolas, monospace;
-    font-size: 13px;
-    background: #fafbfc;
-}
-
-.result {
+.stat {
     border: 1px solid #e2e7ee;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
+    border-radius: 10px;
+    padding: 12px;
 }
 
-.result-header {
+.stat-number {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.stat-label {
+    color: #788394;
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+.right-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 16px;
+}
+
+.score-circle {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    border: 6px solid #e8edf2;
+    border-top-color: #d94d42;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.right-title {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.right-subtitle {
+    color: #737d8c;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.check-card {
+    border: 1px solid #e2e7ee;
+    border-left: 4px solid #d64d42;
+    border-radius: 10px;
+    padding: 12px 12px 12px 11px;
+    margin-bottom: 9px;
+}
+
+.check-card.pass-card {
+    border-left-color: #16966a;
+}
+
+.check-card.review-card {
+    border-left-color: #bd7c0a;
+}
+
+.check-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
-.result-title {
-    font-weight: 700;
+.check-rule {
+    color: #718094;
+    font-size: 9px;
+    margin-bottom: 2px;
+}
+
+.check-title {
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.check-description {
+    color: #748093;
+    font-size: 10px;
+    margin-top: 4px;
 }
 
 .badge {
-    padding: 5px 9px;
+    font-size: 9px;
+    font-weight: 800;
     border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
+    padding: 5px 8px;
+    flex-shrink: 0;
 }
 
-.pass {
-    color: #087443;
-    background: #e5f7ee;
+.badge.pass {
+    background: #e8f7f0;
+    color: #16805d;
 }
 
-.missing {
-    color: #b42318;
+.badge.missing {
     background: #fff0ee;
+    color: #d4473b;
 }
 
-.review {
-    color: #9a6700;
-    background: #fff7db;
+.badge.review {
+    background: #fff7df;
+    color: #a46a00;
 }
 
 .detected {
-    margin-top: 10px;
-    padding: 10px;
-    background: #f5f7fa;
-    border-radius: 8px;
-    font-size: 13px;
-    word-break: break-word;
-}
-
-.example {
-    margin-top: 20px;
-    background: #f1faf6;
-    border: 1px solid #ccebdd;
-    border-radius: 12px;
-    padding: 16px;
-}
-
-.example h3 {
-    margin-top: 0;
-}
-
-.score {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.score-number {
-    font-size: 40px;
-    font-weight: 800;
-    color: #126b50;
-}
-
-.small {
-    color: #697386;
-    font-size: 13px;
-}
-
-.hidden {
+    margin-top: 8px;
+    padding: 8px 10px;
+    border-radius: 7px;
+    background: #f4f7fa;
+    color: #596678;
+    font-size: 10px;
+    line-height: 1.4;
     display: none;
 }
 
-footer {
-    text-align: center;
-    padding: 30px;
-    color: #8a94a6;
-    font-size: 13px;
+/*
+    IMPORTANT:
+    OCR status is completely hidden.
+    OCR still runs in the background.
+*/
+
+#scanning {
+    display: none !important;
+}
+
+#extractedText,
+#extractTextBox,
+#extractToggle,
+.extract-section {
+    display: none !important;
+}
+
+.demo-note {
+    display: none;
+    margin-top: 10px;
+    padding: 9px;
+    background: #eef8f3;
+    color: #167050;
+    border-radius: 8px;
+    font-size: 11px;
 }
 
 @media(max-width: 850px) {
-    .grid {
+    .main-grid {
         grid-template-columns: 1fr;
+    }
+
+    .buttons {
+        flex-wrap: wrap;
     }
 }
 </style>
@@ -277,645 +358,1600 @@ footer {
 
 <body>
 
-<header>
-    <div class="header-inner">
-        <div>
-            <div class="logo">TrustPack</div>
-            <div class="subtitle">Label Compliance Intelligence</div>
+<div class="page">
+
+    <div class="top-space"></div>
+
+    <div class="main-grid">
+
+        <!-- LEFT SIDE -->
+
+        <div class="panel left-panel">
+
+            <h1>Inspect a label</h1>
+
+            <div class="description">
+                Use a clear photo of the front or back label.
+                TrustPack extracts the text and checks the
+                declarations automatically.
+            </div>
+
+            <div class="tabs">
+
+                <div class="tab active">
+                    Upload label
+                </div>
+
+                <div class="tab">
+                    Enter text
+                </div>
+
+            </div>
+
+            <label
+                class="upload-box"
+                id="uploadBox"
+                for="fileInput"
+            >
+
+                <div>
+
+                    <div class="upload-icon">
+                        ↥
+                    </div>
+
+                    <div class="upload-main">
+                        Drop an image here
+                    </div>
+
+                    <div class="upload-sub">
+                        or click to choose a JPG, PNG, or WEBP
+                    </div>
+
+                </div>
+
+            </label>
+
+            <input
+                id="fileInput"
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/jpg"
+            >
+
+            <div
+                class="preview-container"
+                id="previewContainer"
+            >
+
+                <img
+                    id="preview"
+                    alt="Label preview"
+                >
+
+            </div>
+
+            <div class="buttons">
+
+                <button
+                    class="analyse"
+                    id="analyseBtn"
+                    disabled
+                >
+                    Analyse label
+                </button>
+
+                <button
+                    class="clear"
+                    id="clearBtn"
+                >
+                    Clear
+                </button>
+
+                <button
+                    class="example-btn"
+                    id="exampleBtn"
+                >
+                    Example
+                </button>
+
+            </div>
+
+            <!-- Hidden OCR status -->
+
+            <div
+                class="scanning"
+                id="scanning"
+            >
+
+                <strong id="scanStatus">
+                    Scanning...
+                </strong>
+
+                <div class="progress-wrap">
+                    <div
+                        class="progress-bar"
+                        id="progressBar"
+                    ></div>
+                </div>
+
+            </div>
+
+            <div
+                class="assessment"
+                id="assessment"
+            >
+                Assessment complete.
+            </div>
+
+            <div class="stats">
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="totalChecks"
+                    >
+                        7
+                    </div>
+
+                    <div class="stat-label">
+                        Checks
+                    </div>
+
+                </div>
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="passedChecks"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Passed
+                    </div>
+
+                </div>
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="attentionChecks"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Attention
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="panel right-panel">
+
+            <div class="right-header">
+
+                <div
+                    class="score-circle"
+                    id="scoreCircle"
+                >
+                    0%
+                </div>
+
+                <div>
+
+                    <div class="right-title">
+                        Action required
+                    </div>
+
+                    <div
+                        class="right-subtitle"
+                        id="summary"
+                    >
+                        Upload a label to begin inspection.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MANUFACTURER -->
+
+            <div
+                class="check-card"
+                id="manufacturerCard"
+            >
+
+                <div class="check-top">
+
+                    <div>
+
+                        <div class="check-rule">
+                            Rule 6(1)(a)
+                        </div>
+
+                        <div class="check-title">
+                            Manufacturer / Packer / Importer
+                        </div>
+
+                    </div>
+
+                    <span
+                        class="badge missing"
+                        id="manufacturerBadge"
+                    >
+                        MISSING
+                    </span>
+
+                </div>
+
+                <div class="check-description">
+                    Name and address of the responsible business entity.
+                </div>
+
+                <div
+                    class="detected"
+                    id="manufacturerDetected"
+                ></div>
+
+            </div>
+
+
+            <!-- GENERIC NAME -->
+
+            <div
+                class="check-card"
+                id="genericCard"
+            >
+
+                <div class="check-top">
+
+                    <div>
+
+                        <div class="check-rule">
+                            Rule 6(1)(b)
+                        </div>
+
+                        <div class="check-title">
+                            Common / generic name
+                        </div>
+
+                    </div>
+
+                    <span
+                        class="badge missing"
+                        id="genericBadge"
+                    >
+                        MISSING
+                    </span>
+
+                </div>
+
+                <div class="check-description">
+                    A clear name describing the commodity.
+                </div>
+
+                <div
+                    class="detected"
+                    id="genericDetected"
+                ></div>
+
+            </div>
+
+
+            <!-- QUANTITY -->
+
+            <div
+                class="check-card"
+                id="quantityCard"
+            >
+
+                <div class="check-top">
+
+                    <div>
+
+                        <div class="check-rule">
+                            Rule 6(1)(c) / Rule 8
+                        </div>
+
+                        <div class="check-title">
+                            Net quantity
+                        </div>
+
+                    </div>
+
+                    <span
+                        class="badge missing"
+                        id="quantityBadge"
+                    >
+                        MISSING
+                    </span>
+
+                </div>
+
+                <div class="check-description">
+                    Quantity stated in a standard unit of weight,
+                    volume, or number.
+                </div>
+
+                <div
+                    class="detected"
+                    id="quantityDetected"
+                ></div>
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <div
+                class="check-card"
+                id="dateCard"
+            >
+
+                <div class="check-top">
+
+                    <div>
+
+                        <div class="check-rule">
+                            Rule 6(1)(d)
+                        </div>
+
+                        <div class="check-title">
+                            Manufacture / packing date
+                        </div>
+
+                    </div>
+
+                    <span
+                        class="badge review"
+                        id="dateBadge"
+                    >
+                        REVIEW
+                    </span>
+
+                </div>
+
+                <div class="check-description">
+                    Manufacture or packing date information.
+                </div>
+
+                <div
+                    class="detected"
+                    id="dateDetected"
+                ></div>
+
+            </div>
+
+
+            <!-- MRP -->
+
+            <div
+                class="check-card"
+                id="mrpCard"
+            >
+
+                <div class="check-top">
+
+                    <div>
+
+                        <div class="check-rule">
+                            Rule 6(1)(e) / Rule 18
+                        </div>
+
+                        <div class="check-title">
+                            Maximum Retail Price (MRP)
+                        </div>
+
+                    </div>
+
+                    <span
+                        class="badge missing"
+                        id="mrpBadge"
+                    >
+                        MISSING
+                    </span>
+
+                </div>
+
+                <div class="check-description">
+                    MRP stated as inclusive of applicable taxes.
+                </div>
+
+                <div
+                    class="detected"
+                    id="mrpDetected"
+                ></div>
+
+            </div>
+
+
+            <!-- CONSUMER CARE -->
+
+            <div
+                class="check-card"
+                id="consumerCard"
+            >
+
+                <div class="check-top">
+
+                    <div>
+
+                        <div class="check-rule">
+                            Rule 6(1)(f)
+                        </div>
+
+                        <div class="check-title">
+                            Consumer care details
+                        </div>
+
+                    </div>
+
+                    <span
+                        class="badge missing"
+                        id="consumerBadge"
+                    >
+                        MISSING
+                    </span>
+
+                </div>
+
+                <div class="check-description">
+                    Phone, email, helpline, or consumer-care contact
+                    information.
+                </div>
+
+                <div
+                    class="detected"
+                    id="consumerDetected"
+                ></div>
+
+            </div>
+
+
+            <!-- COUNTRY OF ORIGIN -->
+
+            <div
+                class="check-card"
+                id="originCard"
+            >
+
+                <div class="check-top">
+
+                    <div>
+
+                        <div class="check-rule">
+                            Rule 27
+                        </div>
+
+                        <div class="check-title">
+                            Country of origin
+                        </div>
+
+                    </div>
+
+                    <span
+                        class="badge review"
+                        id="originBadge"
+                    >
+                        REVIEW
+                    </span>
+
+                </div>
+
+                <div class="check-description">
+                    Country-of-origin declaration where applicable.
+                </div>
+
+                <div
+                    class="detected"
+                    id="originDetected"
+                ></div>
+
+            </div>
+
+
+            <div
+                class="demo-note"
+                id="demoNote"
+            >
+                Working example loaded.
+            </div>
+
+        </div>
+
     </div>
-</header>
-
-<div class="container">
-
-<div class="grid">
-
-<!-- LEFT SIDE -->
-<div class="card">
-
-<h2>Inspect a label</h2>
-
-<p class="small">
-Upload a clear photo of the front or back label.
-TrustPack will extract the text and check the declarations.
-</p>
-
-<label class="upload-area" for="imageInput">
-
-<div class="upload-icon">📷</div>
-
-<strong>Drop an image here</strong>
-
-<div class="small">
-or click to choose JPG, PNG or WEBP
-</div>
-
-</label>
-
-<input
-    id="imageInput"
-    type="file"
-    accept="image/jpeg,image/png,image/webp,image/jpg"
->
-
-<img id="preview" class="preview">
-
-<div class="actions">
-
-<button
-    id="analyseBtn"
-    class="primary"
-    disabled
->
-Analyse label
-</button>
-
-<button
-    id="exampleBtn"
-    class="secondary"
->
-Try working example
-</button>
-
-<button
-    id="clearBtn"
-    class="secondary"
->
-Clear
-</button>
 
 </div>
-
-<div id="progress" class="progress">
-
-<div class="progress-bar">
-    <div id="progressFill" class="progress-fill"></div>
-</div>
-
-<div id="status" class="status">
-Preparing OCR...
-</div>
-
-</div>
-
-<div class="scan-box">
-
-<div class="scan-title">
-📝 Text being scanned
-</div>
-
-<textarea
-    id="ocrText"
-    placeholder="The text detected from your label will appear here..."
-    readonly
-></textarea>
-
-</div>
-
-</div>
-
-
-<!-- RIGHT SIDE -->
-<div class="card">
-
-<div class="score">
-
-<div class="score-number" id="score">
-0%
-</div>
-
-<div class="small">
-Compliance score
-</div>
-
-</div>
-
-<div id="results">
-
-<div class="result">
-
-<div class="result-header">
-
-<div class="result-title">
-Waiting for label
-</div>
-
-<span class="badge review">
-READY
-</span>
-
-</div>
-
-<div class="detected">
-Upload an image and click "Analyse label".
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- EXAMPLE -->
-<div class="card example">
-
-<h3>💡 Working example</h3>
-
-<p class="small">
-Don't have a label photo right now? Click
-<strong>Try working example</strong> above.
-The website will simulate a correctly scanned label and show
-exactly how the results appear.
-</p>
-
-</div>
-
-</div>
-
-<footer>
-TrustPack — Label Compliance Intelligence
-</footer>
 
 
 <script>
 
-const imageInput = document.getElementById("imageInput");
-const preview = document.getElementById("preview");
-const analyseBtn = document.getElementById("analyseBtn");
-const exampleBtn = document.getElementById("exampleBtn");
-const clearBtn = document.getElementById("clearBtn");
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
-const progress = document.getElementById("progress");
-const progressFill = document.getElementById("progressFill");
-const statusBox = document.getElementById("status");
+const fileInput =
+    document.getElementById("fileInput");
 
-const ocrText = document.getElementById("ocrText");
-const results = document.getElementById("results");
-const scoreBox = document.getElementById("score");
+const uploadBox =
+    document.getElementById("uploadBox");
+
+const preview =
+    document.getElementById("preview");
+
+const previewContainer =
+    document.getElementById("previewContainer");
+
+const analyseBtn =
+    document.getElementById("analyseBtn");
+
+const clearBtn =
+    document.getElementById("clearBtn");
+
+const exampleBtn =
+    document.getElementById("exampleBtn");
+
+const scanning =
+    document.getElementById("scanning");
+
+const scanStatus =
+    document.getElementById("scanStatus");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const assessment =
+    document.getElementById("assessment");
+
+const scoreCircle =
+    document.getElementById("scoreCircle");
+
+const summary =
+    document.getElementById("summary");
+
+const passedChecks =
+    document.getElementById("passedChecks");
+
+const attentionChecks =
+    document.getElementById("attentionChecks");
+
+const demoNote =
+    document.getElementById("demoNote");
+
 
 let selectedFile = null;
 
 
-/* =========================
-   FILE SELECTION
-========================= */
+/* =========================================================
+   FILE UPLOAD
+========================================================= */
 
-imageInput.addEventListener("change", function(e) {
+fileInput.addEventListener(
+    "change",
+    function() {
 
-    const file = e.target.files[0];
+        if (
+            !this.files ||
+            !this.files.length
+        ) {
+            return;
+        }
 
-    if (!file) return;
+        loadFile(
+            this.files[0]
+        );
+
+    }
+);
+
+
+function loadFile(file) {
+
+    if (
+        !file.type.startsWith("image/")
+    ) {
+
+        alert(
+            "Please select a JPG, PNG, or WEBP image."
+        );
+
+        return;
+
+    }
+
 
     selectedFile = file;
 
-    const url = URL.createObjectURL(file);
 
-    preview.src = url;
-    preview.style.display = "block";
-
-    analyseBtn.disabled = false;
-
-    ocrText.value = "";
-
-    results.innerHTML = `
-        <div class="result">
-            <div class="result-header">
-                <div class="result-title">Image ready</div>
-                <span class="badge review">READY</span>
-            </div>
-
-            <div class="detected">
-                Click <strong>Analyse label</strong> to start OCR.
-            </div>
-        </div>
-    `;
-
-});
+    demoNote.style.display =
+        "none";
 
 
-/* =========================
-   CLEAR
-========================= */
-
-clearBtn.addEventListener("click", function() {
-
-    selectedFile = null;
-
-    imageInput.value = "";
-
-    preview.src = "";
-    preview.style.display = "none";
-
-    analyseBtn.disabled = true;
-
-    progress.style.display = "none";
-
-    progressFill.style.width = "0%";
-
-    ocrText.value = "";
-
-    scoreBox.textContent = "0%";
-
-    results.innerHTML = `
-        <div class="result">
-            <div class="result-header">
-                <div class="result-title">Waiting for label</div>
-                <span class="badge review">READY</span>
-            </div>
-
-            <div class="detected">
-                Upload an image and click "Analyse label".
-            </div>
-        </div>
-    `;
-
-});
+    const url =
+        URL.createObjectURL(file);
 
 
-/* =========================
-   IMAGE PREPROCESSING
-========================= */
+    preview.src =
+        url;
 
-function preprocessImage(file) {
 
-    return new Promise((resolve, reject) => {
-
-        const img = new Image();
-
-        const url = URL.createObjectURL(file);
-
-        img.onload = function() {
-
-            /*
-             * Upscale image.
-             * Small phone photos become much easier
-             * for OCR after enlargement.
-             */
-
-            const scale = Math.max(
-                2,
-                Math.min(4, 1800 / Math.max(img.width, img.height))
-            );
-
-            const width = Math.round(img.width * scale);
-            const height = Math.round(img.height * scale);
-
-            const canvas = document.createElement("canvas");
-
-            canvas.width = width;
-            canvas.height = height;
-
-            const ctx = canvas.getContext("2d", {
-                willReadFrequently: true
-            });
-
-            ctx.imageSmoothingEnabled = true;
-            ctx.imageSmoothingQuality = "high";
-
-            ctx.drawImage(
-                img,
-                0,
-                0,
-                width,
-                height
-            );
-
-            /*
-             * Convert to grayscale + increase contrast.
-             */
-
-            const imageData = ctx.getImageData(
-                0,
-                0,
-                width,
-                height
-            );
-
-            const data = imageData.data;
-
-            for (let i = 0; i < data.length; i += 4) {
-
-                const r = data[i];
-                const g = data[i + 1];
-                const b = data[i + 2];
-
-                let gray =
-                    0.299 * r +
-                    0.587 * g +
-                    0.114 * b;
-
-                /*
-                 * Contrast enhancement
-                 */
-
-                gray = ((gray - 128) * 1.35) + 128;
-
-                gray = Math.max(
-                    0,
-                    Math.min(255, gray)
-                );
-
-                data[i] = gray;
-                data[i + 1] = gray;
-                data[i + 2] = gray;
-            }
-
-            ctx.putImageData(imageData, 0, 0);
+    preview.onload =
+        function() {
 
             URL.revokeObjectURL(url);
 
-            resolve(canvas);
         };
 
-        img.onerror = reject;
 
-        img.src = url;
+    previewContainer.style.display =
+        "flex";
 
-    });
+
+    analyseBtn.disabled =
+        false;
+
+
+    assessment.style.display =
+        "none";
+
+
+    resetResults();
 
 }
 
 
-/* =========================
-   SECOND OCR VERSION
-   HIGH CONTRAST
-========================= */
+/* =========================================================
+   DRAG AND DROP
+========================================================= */
 
-function createThresholdCanvas(sourceCanvas) {
+["dragenter", "dragover"].forEach(
+    eventName => {
 
-    const canvas = document.createElement("canvas");
+        uploadBox.addEventListener(
+            eventName,
+            function(e) {
 
-    canvas.width = sourceCanvas.width;
-    canvas.height = sourceCanvas.height;
+                e.preventDefault();
 
-    const ctx = canvas.getContext("2d", {
-        willReadFrequently: true
-    });
+                uploadBox.classList.add(
+                    "dragging"
+                );
 
-    ctx.drawImage(sourceCanvas, 0, 0);
+            }
+        );
 
-    const imageData = ctx.getImageData(
-        0,
-        0,
-        canvas.width,
-        canvas.height
+    }
+);
+
+
+["dragleave", "drop"].forEach(
+    eventName => {
+
+        uploadBox.addEventListener(
+            eventName,
+            function(e) {
+
+                e.preventDefault();
+
+                uploadBox.classList.remove(
+                    "dragging"
+                );
+
+            }
+        );
+
+    }
+);
+
+
+uploadBox.addEventListener(
+    "drop",
+    function(e) {
+
+        const files =
+            e.dataTransfer.files;
+
+        if (
+            files &&
+            files.length
+        ) {
+
+            loadFile(
+                files[0]
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+clearBtn.addEventListener(
+    "click",
+    function() {
+
+        selectedFile = null;
+
+        fileInput.value = "";
+
+        preview.src = "";
+
+        previewContainer.style.display =
+            "none";
+
+        analyseBtn.disabled =
+            true;
+
+        assessment.style.display =
+            "none";
+
+        demoNote.style.display =
+            "none";
+
+        resetResults();
+
+    }
+);
+
+
+/* =========================================================
+   RESET RESULTS
+========================================================= */
+
+function resetResults() {
+
+    scoreCircle.textContent =
+        "0%";
+
+    summary.textContent =
+        "Upload a label to begin inspection.";
+
+    passedChecks.textContent =
+        "0";
+
+    attentionChecks.textContent =
+        "0";
+
+
+    setResult(
+        "manufacturer",
+        null,
+        "MISSING"
     );
 
-    const data = imageData.data;
+    setResult(
+        "generic",
+        null,
+        "MISSING"
+    );
 
-    for (let i = 0; i < data.length; i += 4) {
+    setResult(
+        "quantity",
+        null,
+        "MISSING"
+    );
 
-        const gray = data[i];
+    setResult(
+        "date",
+        null,
+        "REVIEW"
+    );
 
-        /*
-         * Soft threshold.
-         * Don't make it too aggressive because
-         * printed labels can have green/blue backgrounds.
-         */
+    setResult(
+        "mrp",
+        null,
+        "MISSING"
+    );
+
+    setResult(
+        "consumer",
+        null,
+        "MISSING"
+    );
+
+    setResult(
+        "origin",
+        null,
+        "REVIEW"
+    );
+
+}
+
+
+/* =========================================================
+   IMAGE PREPROCESSING
+========================================================= */
+
+async function prepareImage(file) {
+
+    let source;
+
+
+    try {
+
+        source =
+            await createImageBitmap(
+                file,
+                {
+                    imageOrientation:
+                        "from-image"
+                }
+            );
+
+    }
+
+    catch {
+
+        source =
+            await loadImageFallback(
+                file
+            );
+
+    }
+
+
+    const maxDimension =
+        2600;
+
+
+    let scale = 1;
+
+
+    if (
+        Math.max(
+            source.width,
+            source.height
+        ) > maxDimension
+    ) {
+
+        scale =
+            maxDimension /
+            Math.max(
+                source.width,
+                source.height
+            );
+
+    }
+
+
+    const width =
+        Math.max(
+            1000,
+            Math.round(
+                source.width * scale
+            )
+        );
+
+
+    const height =
+        Math.max(
+            1000,
+            Math.round(
+                source.height * scale
+            )
+        );
+
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
+    canvas.width =
+        width;
+
+    canvas.height =
+        height;
+
+
+    const ctx =
+        canvas.getContext(
+            "2d",
+            {
+                willReadFrequently:
+                    true
+            }
+        );
+
+
+    ctx.imageSmoothingEnabled =
+        true;
+
+
+    ctx.imageSmoothingQuality =
+        "high";
+
+
+    ctx.fillStyle =
+        "white";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    ctx.drawImage(
+        source,
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    const imageData =
+        ctx.getImageData(
+            0,
+            0,
+            width,
+            height
+        );
+
+
+    const data =
+        imageData.data;
+
+
+    for (
+        let i = 0;
+        i < data.length;
+        i += 4
+    ) {
+
+        const r =
+            data[i];
+
+        const g =
+            data[i + 1];
+
+        const b =
+            data[i + 2];
+
+
+        let gray =
+            0.299 * r +
+            0.587 * g +
+            0.114 * b;
+
+
+        gray =
+            ((gray - 128) * 1.25) +
+            128;
+
+
+        gray =
+            Math.max(
+                0,
+                Math.min(
+                    255,
+                    gray
+                )
+            );
+
+
+        data[i] =
+            gray;
+
+        data[i + 1] =
+            gray;
+
+        data[i + 2] =
+            gray;
+
+    }
+
+
+    ctx.putImageData(
+        imageData,
+        0,
+        0
+    );
+
+
+    return canvas;
+
+}
+
+
+function loadImageFallback(file) {
+
+    return new Promise(
+        function(resolve, reject) {
+
+            const img =
+                new Image();
+
+
+            img.onload =
+                function() {
+
+                    resolve(img);
+
+                };
+
+
+            img.onerror =
+                reject;
+
+
+            img.src =
+                URL.createObjectURL(
+                    file
+                );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   HIGH CONTRAST IMAGE
+========================================================= */
+
+function makeHighContrastCanvas(
+    source
+) {
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
+    canvas.width =
+        source.width;
+
+    canvas.height =
+        source.height;
+
+
+    const ctx =
+        canvas.getContext(
+            "2d",
+            {
+                willReadFrequently:
+                    true
+            }
+        );
+
+
+    ctx.drawImage(
+        source,
+        0,
+        0
+    );
+
+
+    const imageData =
+        ctx.getImageData(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+    const data =
+        imageData.data;
+
+
+    for (
+        let i = 0;
+        i < data.length;
+        i += 4
+    ) {
+
+        const gray =
+            data[i];
+
 
         let value;
 
-        if (gray < 105) {
+
+        if (
+            gray < 90
+        ) {
+
             value = 0;
-        }
-        else if (gray > 185) {
-            value = 255;
-        }
-        else {
-            value = gray;
+
         }
 
-        data[i] = value;
-        data[i + 1] = value;
-        data[i + 2] = value;
+        else if (
+            gray > 200
+        ) {
+
+            value = 255;
+
+        }
+
+        else {
+
+            value = gray;
+
+        }
+
+
+        data[i] =
+            value;
+
+        data[i + 1] =
+            value;
+
+        data[i + 2] =
+            value;
+
     }
 
-    ctx.putImageData(imageData, 0, 0);
 
-    return canvas;
-}
-
-
-/* =========================
-   OCR
-========================= */
-
-async function runOCR(canvas, label) {
-
-    const result = await Tesseract.recognize(
-        canvas,
-        "eng",
-        {
-            logger: message => {
-
-                if (message.status) {
-
-                    statusBox.textContent =
-                        label + ": " +
-                        message.status;
-
-                }
-
-                if (
-                    message.progress !== undefined
-                ) {
-
-                    const percent =
-                        Math.round(
-                            message.progress * 100
-                        );
-
-                    progressFill.style.width =
-                        percent + "%";
-                }
-
-            }
-        }
+    ctx.putImageData(
+        imageData,
+        0,
+        0
     );
 
-    return result.data.text || "";
+
+    return canvas;
+
 }
 
 
-/* =========================
-   CLEAN OCR TEXT
-========================= */
+/* =========================================================
+   OCR
+========================================================= */
 
-function cleanOCR(text) {
+async function performOCR(file) {
+
+    /*
+     * The status UI is deliberately hidden.
+     * OCR still happens normally.
+     */
+
+    scanning.style.display =
+        "none";
+
+
+    const prepared =
+        await prepareImage(
+            file
+        );
+
+
+    progressBar.style.width =
+        "10%";
+
+
+    const result1 =
+        await Tesseract.recognize(
+            prepared,
+            "eng",
+            {
+                logger:
+                    function(message) {
+
+                        if (
+                            message.status ===
+                            "recognizing text"
+                        ) {
+
+                            progressBar.style.width =
+                                (
+                                    10 +
+                                    message.progress *
+                                    40
+                                ) + "%";
+
+                        }
+
+                    }
+            }
+        );
+
+
+    const text1 =
+        result1.data.text || "";
+
+
+    progressBar.style.width =
+        "55%";
+
+
+    const contrast =
+        makeHighContrastCanvas(
+            prepared
+        );
+
+
+    const result2 =
+        await Tesseract.recognize(
+            contrast,
+            "eng",
+            {
+                logger:
+                    function() {}
+            }
+        );
+
+
+    const text2 =
+        result2.data.text || "";
+
+
+    progressBar.style.width =
+        "90%";
+
+
+    let text3 = "";
+
+
+    /*
+     * Third pass gives OCR another chance
+     * on difficult photographs.
+     */
+
+    try {
+
+        const result3 =
+            await Tesseract.recognize(
+                prepared,
+                "eng",
+                {
+                    logger:
+                        function() {}
+                }
+            );
+
+
+        text3 =
+            result3.data.text || "";
+
+    }
+
+    catch {
+
+        text3 = "";
+
+    }
+
+
+    progressBar.style.width =
+        "100%";
+
+
+    return cleanOCRText(
+        text1 +
+        "\n" +
+        text2 +
+        "\n" +
+        text3
+    );
+
+}
+
+
+/* =========================================================
+   CLEAN OCR
+========================================================= */
+
+function cleanOCRText(text) {
 
     return text
-        .replace(/\r/g, "\n")
-        .replace(/[ \t]+/g, " ")
-        .replace(/\n{3,}/g, "\n\n")
+        .replace(
+            /\r/g,
+            "\n"
+        )
+        .replace(
+            /[ \t]+/g,
+            " "
+        )
+        .replace(
+            /\n[ ]+/g,
+            "\n"
+        )
+        .replace(
+            /\n{3,}/g,
+            "\n\n"
+        )
         .trim();
 
 }
 
 
-/* =========================
-   FIND MRP
-========================= */
+/* =========================================================
+   NORMALIZE OCR
+========================================================= */
+
+function normalized(text) {
+
+    return text
+        .replace(
+            /[₹]/g,
+            "Rs"
+        )
+        .replace(
+            /[|]/g,
+            "I"
+        )
+        .replace(
+            /[—–]/g,
+            "-"
+        )
+        .replace(
+            /\s+/g,
+            " "
+        )
+        .trim();
+
+}
+
+
+/* =========================================================
+   MRP DETECTION
+========================================================= */
 
 function findMRP(text) {
 
-    const upper = text.toUpperCase();
-
     const patterns = [
-
-        /*
-         * ₹190/-
-         */
-
-        /₹\s*(\d{1,6}(?:\.\d{1,2})?)\s*(?:\/|-)?/i,
-
-        /*
-         * Rs. 190
-         */
-
-        /\bRS\.?\s*(?:FOR\s*)?(?:PER\s*)?(?:UNIT\s*)?(\d{1,6}(?:\.\d{1,2})?)/i,
 
         /*
          * MRP Rs 190
          */
 
-        /\bMRP\s*(?:RS\.?|₹)?\s*(\d{1,6}(?:\.\d{1,2})?)/i,
+        /\bM\s*\.?\s*R\s*\.?\s*P\s*\.?\s*(?:[:\-]|IS)?\s*(?:RS\.?|INR|₹)?\s*([0-9]{1,6}(?:\.[0-9]{1,2})?)\b/i,
+
 
         /*
-         * M.R.P. 190
+         * MRP ... Rs 190
          */
 
-        /\bM\.?\s*R\.?\s*P\.?\s*(?:RS\.?|₹)?\s*(\d{1,6}(?:\.\d{1,2})?)/i,
+        /\bMRP\b[^\n]{0,80}?(?:RS\.?|INR|₹)\s*([0-9]{1,6}(?:\.[0-9]{1,2})?)/i,
+
 
         /*
-         * price 190
+         * ₹190
          */
 
-        /\b(?:PRICE|MAXIMUM RETAIL PRICE)\s*(?:RS\.?|₹)?\s*(\d{1,6}(?:\.\d{1,2})?)/i
+        /₹\s*([0-9]{1,6}(?:\.[0-9]{1,2})?)\s*(?:\/\s*-?|\/-)?/i,
+
+
+        /*
+         * Rs 190
+         */
+
+        /\bRS\.?\s*([0-9]{1,6}(?:\.[0-9]{1,2})?)\s*(?:\/\s*-?|\/-)?/i,
+
+
+        /*
+         * Maximum Retail Price
+         */
+
+        /\b(?:PRICE|MAXIMUM RETAIL PRICE)\b[^\n]{0,60}?(?:RS\.?|INR|₹)?\s*([0-9]{1,6}(?:\.[0-9]{1,2})?)/i
+
     ];
 
 
-    for (const pattern of patterns) {
+    /*
+     * First inspect lines containing
+     * MRP-related words.
+     */
 
-        const match = upper.match(pattern);
+    const lines =
+        text.split("\n");
 
-        if (match && match[1]) {
+
+    for (
+        const line of lines
+    ) {
+
+        const upper =
+            normalized(
+                line
+            ).toUpperCase();
+
+
+        if (
+            upper.includes("MRP") ||
+            upper.includes("M.R.P") ||
+            upper.includes("MAXIMUM RETAIL") ||
+            upper.includes("RETAIL PRICE")
+        ) {
+
+            for (
+                const pattern of patterns
+            ) {
+
+                const match =
+                    upper.match(
+                        pattern
+                    );
+
+
+                if (
+                    match &&
+                    match[1]
+                ) {
+
+                    const number =
+                        parseFloat(
+                            match[1]
+                        );
+
+
+                    if (
+                        number > 0 &&
+                        number < 100000
+                    ) {
+
+                        return "₹" +
+                            number;
+
+                    }
+
+                }
+
+            }
+
+
+            /*
+             * OCR may separate currency
+             * and number.
+             */
+
+            const currencyNumber =
+                upper.match(
+                    /(?:RS|INR)\.?\s*([0-9]{1,6})/i
+                );
+
+
+            if (
+                currencyNumber &&
+                currencyNumber[1]
+            ) {
+
+                const n =
+                    parseInt(
+                        currencyNumber[1],
+                        10
+                    );
+
+
+                if (
+                    n > 0 &&
+                    n < 100000
+                ) {
+
+                    return "₹" +
+                        n;
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    /*
+     * Global fallback.
+     */
+
+    const clean =
+        normalized(
+            text
+        );
+
+
+    for (
+        const pattern of patterns
+    ) {
+
+        const match =
+            clean.match(
+                pattern
+            );
+
+
+        if (
+            match &&
+            match[1]
+        ) {
 
             const number =
                 parseFloat(
                     match[1]
-                        .replace(/,/g, "")
                 );
 
-            /*
-             * Prevent OCR nonsense such as
-             * dates and huge numbers.
-             */
 
             if (
                 number > 0 &&
                 number < 100000
             ) {
 
-                return "₹" + number;
+                return "₹" +
+                    number;
+
             }
+
         }
+
     }
 
-
-    /*
-     * Sometimes OCR converts ₹ to Rs
-     * or completely misses MRP.
-     *
-     * Search lines individually.
-     */
-
-    const lines =
-        upper.split("\n");
-
-    for (const line of lines) {
-
-        if (
-            line.includes("MRP") ||
-            line.includes("PRICE") ||
-            line.includes("RS") ||
-            line.includes("₹")
-        ) {
-
-            const numbers =
-                line.match(
-                    /\d{1,6}(?:\.\d{1,2})?/g
-                );
-
-            if (numbers) {
-
-                for (const n of numbers) {
-
-                    const value =
-                        parseFloat(n);
-
-                    if (
-                        value > 0 &&
-                        value < 100000
-                    ) {
-
-                        /*
-                         * Ignore obvious times/dates.
-                         */
-
-                        if (
-                            value !== 1900 &&
-                            value !== 2025 &&
-                            value !== 2026
-                        ) {
-
-                            return "₹" + value;
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     return null;
+
 }
 
 
-/* =========================
-   FIND NET QUANTITY
-========================= */
+/* =========================================================
+   QUANTITY
+========================================================= */
 
 function findQuantity(text) {
 
     const patterns = [
 
-        /(\d+(?:\.\d+)?)\s*(KG|G|GRAM|GRAMS|ML|L|LTR|LITRE|LITRES)\b/i,
+        /\bNET\s*(?:WT|WEIGHT)?\.?\s*[:\-]?\s*([0-9]+(?:\.[0-9]+)?)\s*(KG|KGS|G|GM|GMS|GRAM|GRAMS|ML|L|LTR|LITRE|LITRES)\b/i,
 
-        /NET\s*(?:WT|WEIGHT)?\.?\s*[:\-]?\s*(\d+(?:\.\d+)?)\s*(KG|G|GRAM|GRAMS|ML|L|LTR|LITRE|LITRES)\b/i
+        /\b([0-9]+(?:\.[0-9]+)?)\s*(KG|KGS|G|GM|GMS|GRAM|GRAMS|ML|L|LTR|LITRE|LITRES)\b/i
 
     ];
 
-    for (const pattern of patterns) {
 
-        const match = text.match(pattern);
+    for (
+        const pattern of patterns
+    ) {
+
+        const match =
+            text.match(
+                pattern
+            );
+
 
         if (match) {
 
-            return match[1] + " " + match[2];
+            return (
+                match[1] +
+                " " +
+                match[2]
+            );
+
         }
+
     }
 
+
     return null;
+
 }
 
 
-/* =========================
-   FIND DATES
-========================= */
+/* =========================================================
+   DATE
+========================================================= */
 
-function findDate(text) {
+function findDates(text) {
 
     const patterns = [
 
@@ -925,238 +1961,200 @@ function findDate(text) {
 
     ];
 
+
     let dates = [];
 
-    for (const pattern of patterns) {
+
+    for (
+        const pattern of patterns
+    ) {
 
         const matches =
-            text.match(pattern);
+            text.match(
+                pattern
+            );
+
 
         if (matches) {
 
-            dates.push(...matches);
+            dates =
+                dates.concat(
+                    matches
+                );
+
         }
+
     }
 
-    return [...new Set(dates)].slice(0, 5);
-}
 
-
-/* =========================
-   DISPLAY RESULTS
-========================= */
-
-function displayResults(text) {
-
-    const mrp = findMRP(text);
-
-    const quantity = findQuantity(text);
-
-    const dates = findDate(text);
-
-    const checks = [
-
-        {
-            title: "Manufacturer / Packer / Importer",
-            value: findManufacturer(text),
-            required: true
-        },
-
-        {
-            title: "Common / generic name",
-            value: findGenericName(text),
-            required: true
-        },
-
-        {
-            title: "Net quantity",
-            value: quantity,
-            required: true
-        },
-
-        {
-            title: "Manufacture / packing date",
-            value:
-                dates.length
-                    ? dates.join(", ")
-                    : null,
-            required: true
-        },
-
-        {
-            title: "Maximum Retail Price (MRP)",
-            value: mrp,
-            required: true
-        },
-
-        {
-            title: "Consumer care details",
-            value: findConsumerCare(text),
-            required: true
-        },
-
-        {
-            title: "Country of origin",
-            value: findOrigin(text),
-            required: false
-        }
-
+    return [
+        ...new Set(
+            dates
+        )
     ];
 
-
-    let passed = 0;
-
-
-    let html = "";
-
-
-    checks.forEach(check => {
-
-        if (check.value) {
-            passed++;
-        }
-
-        const state =
-            check.value
-                ? "pass"
-                : "missing";
-
-        const label =
-            check.value
-                ? "PASS"
-                : "MISSING";
-
-        html += `
-
-        <div class="result">
-
-            <div class="result-header">
-
-                <div class="result-title">
-                    ${check.title}
-                </div>
-
-                <span class="badge ${state}">
-                    ${label}
-                </span>
-
-            </div>
-
-            <div class="detected">
-
-                ${
-                    check.value
-                        ? "Detected: " +
-                          escapeHTML(
-                              String(check.value)
-                          )
-                        : "No reliable declaration detected."
-                }
-
-            </div>
-
-        </div>
-
-        `;
-    });
-
-
-    const score =
-        Math.round(
-            (passed / checks.length) * 100
-        );
-
-    scoreBox.textContent =
-        score + "%";
-
-    results.innerHTML = html;
-
 }
 
 
-/* =========================
-   EXTRA FIELD DETECTION
-========================= */
+/* =========================================================
+   MANUFACTURER
+========================================================= */
 
 function findManufacturer(text) {
 
     const patterns = [
 
-        /manufactured\s*by\s*[:\-]?\s*(.{3,100})/i,
+        /(?:manufactured|manufacturing)\s*by\s*[:\-]?\s*([^\n]+)/i,
 
-        /marketed\s*by\s*[:\-]?\s*(.{3,100})/i,
+        /packed\s*by\s*[:\-]?\s*([^\n]+)/i,
 
-        /packed\s*by\s*[:\-]?\s*(.{3,100})/i,
+        /marketed\s*by\s*[:\-]?\s*([^\n]+)/i,
 
-        /imported\s*by\s*[:\-]?\s*(.{3,100})/i
+        /imported\s*by\s*[:\-]?\s*([^\n]+)/i,
+
+        /manufactured\s*&?\s*packed\s*by\s*[:\-]?\s*([^\n]+)/i
 
     ];
 
-    for (const pattern of patterns) {
 
-        const match = text.match(pattern);
+    for (
+        const pattern of patterns
+    ) {
+
+        const match =
+            text.match(
+                pattern
+            );
+
 
         if (match) {
 
             return match[1]
-                .split("\n")[0]
-                .trim();
+                .trim()
+                .slice(
+                    0,
+                    150
+                );
+
         }
+
     }
 
+
     return null;
+
 }
 
+
+/* =========================================================
+   GENERIC NAME
+========================================================= */
 
 function findGenericName(text) {
 
     const patterns = [
 
-        /(?:product|commodity|generic name)\s*[:\-]?\s*([A-Za-z][A-Za-z ]{2,50})/i,
+        /(?:common|generic)\s*(?:name)?\s*[:\-]?\s*([A-Za-z][A-Za-z ]{2,60})/i,
 
-        /\b(tea|coffee|rice|sugar|salt|flour|biscuits|soap|shampoo)\b/i
+        /\b(tea)\b/i,
+
+        /\b(coffee)\b/i,
+
+        /\b(rice)\b/i,
+
+        /\b(sugar)\b/i,
+
+        /\b(salt)\b/i,
+
+        /\b(flour)\b/i,
+
+        /\b(biscuits?)\b/i,
+
+        /\b(shampoo)\b/i,
+
+        /\b(soap)\b/i,
+
+        /\b(oral rehydration salts?)\b/i
 
     ];
 
-    for (const pattern of patterns) {
 
-        const match = text.match(pattern);
+    for (
+        const pattern of patterns
+    ) {
+
+        const match =
+            text.match(
+                pattern
+            );
+
 
         if (match) {
 
-            return match[1].trim();
+            return match[1]
+                .trim();
+
         }
+
     }
 
+
     return null;
+
 }
 
+
+/* =========================================================
+   CONSUMER CARE
+========================================================= */
 
 function findConsumerCare(text) {
 
     const patterns = [
 
-        /(?:customer|consumer)\s*(?:care|service)[^\n]{0,100}/i,
+        /(?:consumer|customer)\s*care[^\n]*/i,
 
-        /(?:contact|helpline|toll free)[^\n]{0,100}/i,
+        /(?:consumer|customer)\s*(?:helpline|service)[^\n]*/i,
 
-        /\b1[-\s]?\d{3}[-\s]?\d{3}[-\s]?\d{4}\b/
+        /(?:toll\s*free|helpline)[^\n]*/i,
+
+        /\b1[0-9]{2,4}[-\s]?[0-9]{3,8}[-\s]?[0-9]{3,8}\b/
 
     ];
 
-    for (const pattern of patterns) {
 
-        const match = text.match(pattern);
+    for (
+        const pattern of patterns
+    ) {
+
+        const match =
+            text.match(
+                pattern
+            );
+
 
         if (match) {
 
-            return match[0].trim();
+            return match[0]
+                .trim()
+                .slice(
+                    0,
+                    150
+                );
+
         }
+
     }
 
+
     return null;
+
 }
 
+
+/* =========================================================
+   COUNTRY OF ORIGIN
+========================================================= */
 
 function findOrigin(text) {
 
@@ -1170,187 +2168,398 @@ function findOrigin(text) {
 
     ];
 
-    for (const pattern of patterns) {
 
-        const match = text.match(pattern);
+    for (
+        const pattern of patterns
+    ) {
+
+        const match =
+            text.match(
+                pattern
+            );
+
 
         if (match) {
 
             return match[1]
                 .split("\n")[0]
-                .trim();
+                .trim()
+                .slice(
+                    0,
+                    80
+                );
+
         }
+
     }
+
 
     return null;
-}
-
-
-/* =========================
-   HTML ESCAPE
-========================= */
-
-function escapeHTML(value) {
-
-    return value
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
 
 }
 
 
-/* =========================
-   ANALYSE REAL IMAGE
-========================= */
+/* =========================================================
+   RESULT DISPLAY
+========================================================= */
 
-analyseBtn.addEventListener("click", async function() {
+function setResult(
+    name,
+    value,
+    defaultState
+) {
 
-    if (!selectedFile) return;
-
-    analyseBtn.disabled = true;
-
-    progress.style.display = "block";
-
-    progressFill.style.width = "5%";
-
-    statusBox.textContent =
-        "Preparing image for OCR...";
-
-    ocrText.value =
-        "Scanning image...\n\n";
-
-    try {
-
-        /*
-         * STEP 1
-         * Preprocess original photo
-         */
-
-        const processed =
-            await preprocessImage(
-                selectedFile
-            );
+    const card =
+        document.getElementById(
+            name + "Card"
+        );
 
 
-        /*
-         * STEP 2
-         * First OCR pass
-         */
-
-        statusBox.textContent =
-            "Scanning original image...";
-
-        progressFill.style.width = "10%";
-
-        const text1 =
-            await runOCR(
-                processed,
-                "OCR pass 1"
-            );
+    const badge =
+        document.getElementById(
+            name + "Badge"
+        );
 
 
-        /*
-         * STEP 3
-         * Threshold version
-         */
-
-        statusBox.textContent =
-            "Improving image contrast...";
-
-        progressFill.style.width = "50%";
-
-        const threshold =
-            createThresholdCanvas(
-                processed
-            );
+    const detected =
+        document.getElementById(
+            name + "Detected"
+        );
 
 
-        /*
-         * STEP 4
-         * Second OCR pass
-         */
-
-        const text2 =
-            await runOCR(
-                threshold,
-                "OCR pass 2"
-            );
+    card.classList.remove(
+        "pass-card",
+        "review-card"
+    );
 
 
-        /*
-         * Combine OCR results.
-         *
-         * This is important because one OCR
-         * pass may read MRP while another
-         * reads the product name.
-         */
-
-        const combined =
-            cleanOCR(
-                text1 +
-                "\n" +
-                text2
-            );
+    detected.style.display =
+        "none";
 
 
-        ocrText.value = combined;
+    if (value) {
+
+        badge.textContent =
+            "PASS";
 
 
-        /*
-         * STEP 5
-         * Analyse extracted text
-         */
-
-        statusBox.textContent =
-            "Checking label declarations...";
-
-        progressFill.style.width = "90%";
+        badge.className =
+            "badge pass";
 
 
-        displayResults(combined);
+        card.classList.add(
+            "pass-card"
+        );
 
 
-        progressFill.style.width = "100%";
+        detected.textContent =
+            "Detected: " +
+            value;
 
-        statusBox.textContent =
-            "Analysis complete.";
 
-
-    }
-    catch(error) {
-
-        console.error(error);
-
-        statusBox.textContent =
-            "OCR failed. Please try a clearer image.";
-
-        ocrText.value =
-            "OCR ERROR:\n\n" +
-            error.message;
-
-    }
-    finally {
-
-        analyseBtn.disabled = false;
+        detected.style.display =
+            "block";
 
     }
 
-});
+    else {
+
+        badge.textContent =
+            defaultState;
 
 
-/* =========================
-   WORKING DEMO
-========================= */
+        if (
+            defaultState ===
+            "REVIEW"
+        ) {
 
-exampleBtn.addEventListener("click", function() {
+            badge.className =
+                "badge review";
 
-    const demoText = `
 
+            card.classList.add(
+                "review-card"
+            );
+
+        }
+
+        else {
+
+            badge.className =
+                "badge missing";
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   ANALYSE BUTTON
+========================================================= */
+
+analyseBtn.addEventListener(
+    "click",
+    async function() {
+
+        if (!selectedFile) {
+            return;
+        }
+
+
+        analyseBtn.disabled =
+            true;
+
+
+        exampleBtn.disabled =
+            true;
+
+
+        /*
+         * Keep scanning invisible.
+         */
+
+        scanning.style.display =
+            "none";
+
+
+        assessment.style.display =
+            "none";
+
+
+        try {
+
+            const text =
+                await performOCR(
+                    selectedFile
+                );
+
+
+            /*
+             * OCR text is deliberately
+             * NOT displayed anywhere.
+             */
+
+            analyseText(
+                text
+            );
+
+
+            assessment.style.display =
+                "block";
+
+        }
+
+        catch(error) {
+
+            console.error(
+                "OCR ERROR:",
+                error
+            );
+
+
+            summary.textContent =
+                "The image could not be analysed. Please try a clearer photo.";
+
+        }
+
+        finally {
+
+            analyseBtn.disabled =
+                false;
+
+
+            exampleBtn.disabled =
+                false;
+
+
+            scanning.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ANALYSE OCR RESULT
+========================================================= */
+
+function analyseText(text) {
+
+    const manufacturer =
+        findManufacturer(
+            text
+        );
+
+
+    const generic =
+        findGenericName(
+            text
+        );
+
+
+    const quantity =
+        findQuantity(
+            text
+        );
+
+
+    const dates =
+        findDates(
+            text
+        );
+
+
+    const mrp =
+        findMRP(
+            text
+        );
+
+
+    const consumer =
+        findConsumerCare(
+            text
+        );
+
+
+    const origin =
+        findOrigin(
+            text
+        );
+
+
+    setResult(
+        "manufacturer",
+        manufacturer,
+        "MISSING"
+    );
+
+
+    setResult(
+        "generic",
+        generic,
+        "MISSING"
+    );
+
+
+    setResult(
+        "quantity",
+        quantity,
+        "MISSING"
+    );
+
+
+    setResult(
+        "date",
+        dates.length
+            ? dates.join(", ")
+            : null,
+        "REVIEW"
+    );
+
+
+    setResult(
+        "mrp",
+        mrp,
+        "MISSING"
+    );
+
+
+    setResult(
+        "consumer",
+        consumer,
+        "MISSING"
+    );
+
+
+    setResult(
+        "origin",
+        origin,
+        "REVIEW"
+    );
+
+
+    const values = [
+
+        manufacturer,
+
+        generic,
+
+        quantity,
+
+        dates.length
+            ? dates.join(", ")
+            : null,
+
+        mrp,
+
+        consumer,
+
+        origin
+
+    ];
+
+
+    const passed =
+        values.filter(
+            Boolean
+        ).length;
+
+
+    const attention =
+        values.length -
+        passed;
+
+
+    const score =
+        Math.round(
+            (
+                passed /
+                values.length
+            ) * 100
+        );
+
+
+    passedChecks.textContent =
+        passed;
+
+
+    attentionChecks.textContent =
+        attention;
+
+
+    scoreCircle.textContent =
+        score + "%";
+
+
+    summary.textContent =
+        passed +
+        " checks passed, " +
+        attention +
+        " need review or attention.";
+
+}
+
+
+/* =========================================================
+   EXAMPLE BUTTON
+========================================================= */
+
+exampleBtn.addEventListener(
+    "click",
+    function() {
+
+        /*
+         * This is a built-in working example.
+         * It does not need OCR because the purpose
+         * is to demonstrate the final result UI.
+         */
+
+        const exampleText = `
 LIPTON
-
 GREEN TEA
 
 Manufactured by:
@@ -1361,7 +2570,6 @@ NET WEIGHT 200 g
 MRP ₹190/- (INCL. OF ALL TAXES)
 
 PKD 12/09/25
-
 USE BY 11/12/26
 
 Consumer Care:
@@ -1370,32 +2578,45 @@ Consumer Care:
 Made in India
 
 BATCH NO. FAHL02M
-
-`;
-
-    ocrText.value =
-        demoText.trim();
+        `.trim();
 
 
-    displayResults(
-        demoText
-    );
+        previewContainer.style.display =
+            "none";
 
 
-    statusBox.textContent =
-        "Working example loaded.";
+        selectedFile = null;
 
-    progress.style.display =
-        "block";
 
-    progressFill.style.width =
-        "100%";
+        fileInput.value =
+            "";
 
-    preview.style.display =
-        "none";
 
-});
+        analyseText(
+            exampleText
+        );
 
+
+        assessment.style.display =
+            "block";
+
+
+        demoNote.style.display =
+            "block";
+
+
+        summary.textContent =
+            "Working example analysed successfully.";
+
+    }
+);
+
+
+/* =========================================================
+   STARTUP
+========================================================= */
+
+resetResults();
 
 </script>
 
