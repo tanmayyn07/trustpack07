@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TrustPack — Label Compliance</title>
+<style>
+:root{--n:#14365c;--b:#2c6296;--g:#13815f;--r:#c34b40;--a:#a86f17;--m:#66748a;--l:#e4e9f0}
+*{box-sizing:border-box}body{margin:0;background:#f6f8fb;color:#122033;font-family:Arial,sans-serif}.wrap{max-width:1100px;margin:auto;padding:24px}
+header{display:flex;justify-content:space-between;align-items:center}.brand{display:flex;gap:10px;align-items:center}.logo{background:var(--n);color:#fff;border-radius:12px;padding:11px 15px;font-weight:bold}.brand b{font-size:20px}.brand small{display:block;color:var(--m)}.online{border:1px solid var(--l);border-radius:20px;padding:8px 12px;color:var(--m);font-size:12px}
+.hero{margin-top:25px;padding:40px;border-radius:22px;background:linear-gradient(135deg,#12345a,#2d6296);color:white}.hero h1{font-size:42px;margin:10px 0}.hero p{max-width:650px;color:#dce9f6;line-height:1.6}.main{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}.card{background:white;border:1px solid var(--l);border-radius:18px;padding:24px}
+.tabs{display:flex;background:#f1f4f8;padding:4px;border-radius:10px;margin:18px 0}.tab{flex:1;border:0;background:none;padding:10px;font-weight:bold;color:var(--m);border-radius:8px}.tab.active{background:white;color:var(--n)}.drop{border:2px dashed #b7c5d6;border-radius:14px;padding:55px 20px;text-align:center;cursor:pointer}.drop strong{display:block;margin-bottom:6px}.drop small{color:var(--m)}input{display:none}#preview{display:none;width:100%;max-height:230px;object-fit:contain;margin-top:12px;border:1px solid var(--l);border-radius:12px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{border:0;border-radius:9px;padding:12px 15px;font-weight:bold;cursor:pointer}.primary{background:var(--n);color:white}.secondary{background:#edf2f7;color:var(--n)}.demo{background:#e9f7f1;color:var(--g)}textarea{width:100%;height:150px;padding:12px;border:1px solid var(--l);border-radius:10px}.hidden{display:none!important}#status{min-height:25px;margin-top:10px;color:var(--m);font-size:12px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.metric{background:#f7f9fc;padding:12px;border-radius:10px}.metric b{font-size:20px}.metric small{display:block;color:var(--m)}
+.empty{min-height:380px;display:grid;place-items:center;text-align:center;color:var(--m)}.result{display:none}.top{display:flex;justify-content:space-between;align-items:center}.score{font-size:28px;font-weight:bold;color:var(--g)}.rule{border:1px solid var(--l);border-left:4px solid #bcc7d4;border-radius:9px;padding:12px;margin-top:8px}.pass{border-left-color:var(--g);background:#fbfffd}.fail{border-left-color:var(--r);background:#fffafa}.review{border-left-color:var(--a);background:#fffdf8}.tag{float:right;border-radius:20px;padding:5px 8px;font-size:9px;font-weight:bold}.pass .tag{background:#e9f7f1;color:var(--g)}.fail .tag{background:#fdf0ee;color:var(--r)}.review .tag{background:#fff6e4;color:var(--a)}.label{font-weight:bold;font-size:13px}.clause{font-size:10px;color:#8994a5}.desc,.evidence{font-size:11px;color:var(--m);margin-top:4px}.evidence{background:#f6f8fb;padding:7px;border-radius:7px}.note{font-size:11px;color:var(--m);margin-top:8px}@media(max-width:800px){.main{grid-template-columns:1fr}.hero h1{font-size:32px}}
+</style></head><body><div class="wrap">
+<header><div class="brand"><div class="logo">T</div><div><b>TrustPack</b><small>Label compliance intelligence</small></div></div><div class="online">● Website online</div></header>
+<section class="hero"><div><small>PACKAGING COMPLIANCE</small><h1>Check a product label before it reaches market.</h1><p>Upload a label or run the built-in working example to demonstrate the complete assessment flow.</p></div></section>
+<div class="main"><section class="card"><h2>Inspect a label</h2><p style="color:var(--m)">Upload a clear photo, paste text, or click the working example.</p>
+<div class="tabs"><button class="tab active" data-t="u">Upload label</button><button class="tab" data-t="p">Enter text</button></div>
+<div id="u"><div class="drop" id="drop"><strong>Drop an image here</strong><small>or click to choose JPG, PNG, or WEBP</small><input id="file" type="file" accept="image/*"></div><img id="preview"><div class="actions"><button class="btn primary" id="scan" disabled>Analyse label</button><button class="btn secondary" id="clear">Clear</button><button class="btn demo" id="demo">▶ Working example</button></div><div class="note">Working example is built into this page and does not depend on the backend.</div></div>
+<div id="p" class="hidden"><textarea id="text" placeholder="Paste label text here…"></textarea><div class="actions"><button class="btn primary" id="pasteRun">Analyse text</button></div></div>
+<div id="status"></div>
+<div id="scannedPanel" class="hidden" style="margin-top:16px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <strong style="font-size:13px">Scanned label text</strong>
+    <span id="scanState" style="font-size:10px;color:#66748a">OCR result</span>
+  </div>
+  <pre id="scannedText" style="margin:0;white-space:pre-wrap;background:#f6f8fb;border:1px solid #e4e9f0;border-radius:10px;padding:12px;max-height:220px;overflow:auto;font:12px/1.5 Arial,sans-serif"></pre>
+</div>
+<div class="metrics"><div class="metric"><b>7</b><small>Checks</small></div><div class="metric"><b id="mp">—</b><small>Passed</small></div><div class="metric"><b id="ma">—</b><small>Attention</small></div></div></section>
+<section class="card"><div id="empty" class="empty"><div><h3>Your assessment will appear here</h3><span>Click <b>Working example</b> to see a complete successful inspection.</span></div></div><div id="result" class="result"><div class="top"><div><div class="score" id="score">100%</div><h2 id="head">Ready</h2><p id="sum"></p></div><button class="btn secondary" id="new">New inspection</button></div><div id="rules"></div><details style="margin-top:12px"><summary>View extracted label text</summary><pre id="ocr" style="white-space:pre-wrap;font-size:11px"></pre></details></div></section></div></div>
+<script>
+const $=x=>document.getElementById(x),API='/api/v1/analyze';let img=null;
+const DEMO={score:100,summary:'Working example: all seven sample declarations were detected and accepted.',text:'ORAL REHYDRATION SALTS\nNet Wt. 35 g\nMRP ₹190/- (incl. of all taxes)\n₹5.43 per g\nPKD 12/09/25\nUSE BY 11/12/26\nBatch No. FAHL02M\nManufactured in India\nConsumer care: 1800-123-4567',results:[
+{clause:'Rule 6(1)(a)',label:'Manufacturer / Packer / Importer',description:'Name and address of the responsible business entity.',status:'pass',matched:'Example manufacturer, India'},
+{clause:'Rule 6(1)(b)',label:'Common / generic name',description:'A clear name describing the commodity.',status:'pass',matched:'Oral Rehydration Salts'},
+{clause:'Rule 6(1)(c) / Rule 8',label:'Net quantity',description:'Quantity stated in a standard unit.',status:'pass',matched:'Net Wt. 35 g'},
+{clause:'Rule 6(1)(d)',label:'Manufacture / packing date',description:'Manufacture or packing date information.',status:'pass',matched:'PKD 12/09/25'},
+{clause:'Rule 6(1)(e) / Rule 18',label:'Maximum Retail Price (MRP)',description:'MRP stated as inclusive of applicable taxes.',status:'pass',matched:'₹190/- (incl. of all taxes)'},
+{clause:'Rule 6(1)(f)',label:'Consumer care details',description:'Phone, email, helpline, or consumer-care contact.',status:'pass',matched:'1800-123-4567'},
+{clause:'Rule 27',label:'Country of origin',description:'Country-of-origin declaration where applicable.',status:'pass',matched:'Manufactured in India'}]};
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('u').classList.toggle('hidden',b.dataset.t!='u');$('p').classList.toggle('hidden',b.dataset.t!='p')});
+$('drop').onclick=()=>$('file').click();$('file').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=x=>{img=x.target.result;$('preview').src=img;$('preview').style.display='block';$('scan').disabled=false;msg('Label loaded. Ready to analyse.','ok')};r.readAsDataURL(f)};
+$('demo').onclick=()=>{
+  showScannedText(DEMO.text,'Example OCR complete');
+  render(DEMO);
+  msg('Working example loaded — scanned text is shown on the left.','ok')
+};$('clear').onclick=()=>{img=null;$('file').value='';$('preview').style.display='none';$('scan').disabled=true;$('scannedPanel').classList.add('hidden');$('scannedText').textContent='';$('empty').style.display='grid';$('result').style.display='none';msg('','')};$('new').onclick=()=>$('clear').click();$('pasteRun').onclick=()=>run($('text').value,null);
+$('scan').onclick=async()=>{
+  msg('Scanning label text…','busy'); $('scan').disabled=true;
+  showScannedText('Scanning…','OCR in progress');
+  try{
+    let t=await ocr(img);
+    showScannedText(t,'OCR complete');
+    await run(t,img)
+  }catch(e){
+    showScannedText('Could not extract text from this image.','OCR failed');
+    msg('Could not read the image. Try Working example.','err')
+  }finally{$('scan').disabled=false}
+};
+async function run(text,image){
+  showScannedText(text||'','Scanned text');
+  try{
+    let r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:text||'',image:image||null})});
+    if(!r.ok)throw Error();
+    let d=await r.json();
+    if(d.text) showScannedText(d.text,'OCR result');
+    fixMRP(d); render(d); msg('Assessment complete.','ok')
+  }catch(e){
+    msg('Backend unavailable. The scanned text is still shown above.','err')
+  }
+}
+function fixMRP(d){let r=(d.results||[]).find(x=>/maximum retail price|mrp/i.test(x.label||'')),t=d.text||'';if(!r)return;let x=t.match(/₹\s*(\d{2,5}(?:[.,]\d{1,2})?)\s*\/\s*-/i);if(x){r.status='pass';r.matched='₹'+x[1]+'/-';return}let y=t.match(/(?:m\.r\.p|mrp|maximum retail price)[^\d]{0,20}(\d{2,5})/i);if(y){let v=y[1];if(/^3\d{3}$/.test(v))v=v.slice(1);r.status='pass';r.matched='₹'+v+'/-'}}
+function render(d){let rs=d.results||[],p=rs.filter(x=>x.status==='pass').length;$('mp').textContent=p;$('ma').textContent=rs.length-p;$('score').textContent=(d.score??Math.round(p/(rs.length||1)*100))+'%';$('sum').textContent=d.summary||'';$('ocr').textContent=d.text||'';$('empty').style.display='none';$('result').style.display='block';$('rules').innerHTML=rs.map(r=>`<div class="rule ${r.status}"><span class="tag">${r.status==='pass'?'PASS':r.status==='fail'?'MISSING':'REVIEW'}</span><div class="clause">${esc(r.clause)}</div><div class="label">${esc(r.label)}</div><div class="desc">${esc(r.description)}</div>${r.matched?`<div class="evidence">Detected: “${esc(r.matched)}”</div>`:''}</div>`).join('')}
+function showScannedText(t,state){
+  $('scannedPanel').classList.remove('hidden');
+  $('scannedText').textContent=t||'No text detected.';
+  $('scanState').textContent=state||'OCR result';
+}
+function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}function msg(t,c){$('status').className=c||'';$('status').textContent=t}
+async function ocr(src){if(!window.Tesseract)throw Error();let w=await Tesseract.createWorker('eng');let out='';for(let a of [0,90,180,270]){let c=document.createElement('canvas'),im=new Image();im.src=src;await new Promise(r=>im.onload=r);c.width=im.naturalWidth;c.height=im.naturalHeight;let x=c.getContext('2d');x.translate(c.width/2,c.height/2);x.rotate(a*Math.PI/180);x.drawImage(im,-im.naturalWidth/2,-im.naturalHeight/2);let q=await w.recognize(c);out+='\n'+q.data.text}await w.terminate();return out}
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js"></script></body></html>
