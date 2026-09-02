@@ -317,21 +317,78 @@ button:disabled {
     display: none;
 }
 
-/*
-    IMPORTANT:
-    OCR status is completely hidden.
-    OCR still runs in the background.
-*/
-
+/* Scanning progress is visible now — helps show the pipeline is actually running */
 #scanning {
-    display: none !important;
+    display: none;
+    margin-top: 12px;
 }
 
-#extractedText,
-#extractTextBox,
-#extractToggle,
+#scanning.active {
+    display: block;
+}
+
+.progress-wrap {
+    background: #eef2f7;
+    border-radius: 20px;
+    height: 8px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.progress-bar {
+    background: #176c98;
+    height: 100%;
+    width: 0%;
+    transition: width .2s ease;
+}
+
+#scanStatus {
+    font-size: 12px;
+    color: #34546b;
+}
+
+/* Extracted-text evidence panel: now VISIBLE (this is the "Evidence" step from the slide) */
 .extract-section {
-    display: none !important;
+    margin-top: 14px;
+    border: 1px solid #e2e7ee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.extract-toggle {
+    width: 100%;
+    background: #f4f7fa;
+    border: 0;
+    padding: 10px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #34546b;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.extract-body {
+    display: none;
+    padding: 10px 12px;
+    background: #fafbfc;
+    border-top: 1px solid #e6ebf1;
+}
+
+.extract-body.open {
+    display: block;
+}
+
+#extractedText {
+    white-space: pre-wrap;
+    font-family: "Courier New", monospace;
+    font-size: 10.5px;
+    color: #45505f;
+    max-height: 220px;
+    overflow-y: auto;
+    margin: 0;
 }
 
 .demo-note {
@@ -456,10 +513,9 @@ button:disabled {
 
             </div>
 
-            <!-- Hidden OCR status -->
+            <!-- Scanning status is now shown during analysis -->
 
             <div
-                class="scanning"
                 id="scanning"
             >
 
@@ -528,6 +584,20 @@ button:disabled {
                         Attention
                     </div>
 
+                </div>
+
+            </div>
+
+            <!-- Evidence panel: raw OCR text, collapsible -->
+            <div class="extract-section" id="extractSection" style="display:none;">
+
+                <button class="extract-toggle" id="extractToggle" type="button">
+                    <span>View extracted text (evidence)</span>
+                    <span id="extractArrow">▾</span>
+                </button>
+
+                <div class="extract-body" id="extractBody">
+                    <pre id="extractedText"></pre>
                 </div>
 
             </div>
@@ -930,8 +1000,54 @@ const attentionChecks =
 const demoNote =
     document.getElementById("demoNote");
 
+const extractSection =
+    document.getElementById("extractSection");
+
+const extractToggle =
+    document.getElementById("extractToggle");
+
+const extractBody =
+    document.getElementById("extractBody");
+
+const extractArrow =
+    document.getElementById("extractArrow");
+
+const extractedTextEl =
+    document.getElementById("extractedText");
+
 
 let selectedFile = null;
+
+
+/* =========================================================
+   EVIDENCE PANEL TOGGLE
+========================================================= */
+
+extractToggle.addEventListener(
+    "click",
+    function() {
+
+        const isOpen =
+            extractBody.classList.toggle("open");
+
+        extractArrow.textContent =
+            isOpen ? "▴" : "▾";
+
+    }
+);
+
+
+function showExtractedText(text) {
+
+    extractedTextEl.textContent =
+        text && text.trim().length
+            ? text.trim()
+            : "(No readable text was found in this image.)";
+
+    extractSection.style.display =
+        "block";
+
+}
 
 
 /* =========================================================
@@ -1004,6 +1120,10 @@ function loadFile(file) {
 
 
     assessment.style.display =
+        "none";
+
+
+    extractSection.style.display =
         "none";
 
 
@@ -1104,6 +1224,13 @@ clearBtn.addEventListener(
         demoNote.style.display =
             "none";
 
+        extractSection.style.display =
+            "none";
+
+        extractBody.classList.remove("open");
+
+        extractArrow.textContent = "▾";
+
         resetResults();
 
     }
@@ -1176,6 +1303,12 @@ function resetResults() {
 
 /* =========================================================
    IMAGE PREPROCESSING
+   FIX: previously this forced BOTH width and height to a
+   minimum of 1000px independently, which stretched/squished
+   non-square photos and badly hurt OCR accuracy — that was
+   the main reason different images kept producing the same
+   "mostly missing" result. Now a single uniform scale factor
+   is used so the aspect ratio is always preserved.
 ========================================================= */
 
 async function prepareImage(file) {
@@ -1209,42 +1342,50 @@ async function prepareImage(file) {
     const maxDimension =
         2600;
 
+    const minDimension =
+        1100;
+
+
+    const longestSide =
+        Math.max(
+            source.width,
+            source.height
+        );
+
 
     let scale = 1;
 
 
     if (
-        Math.max(
-            source.width,
-            source.height
-        ) > maxDimension
+        longestSide > maxDimension
     ) {
 
         scale =
             maxDimension /
-            Math.max(
-                source.width,
-                source.height
-            );
+            longestSide;
+
+    }
+
+    else if (
+        longestSide < minDimension
+    ) {
+
+        scale =
+            minDimension /
+            longestSide;
 
     }
 
 
     const width =
-        Math.max(
-            1000,
-            Math.round(
-                source.width * scale
-            )
+        Math.round(
+            source.width * scale
         );
 
 
     const height =
-        Math.max(
-            1000,
-            Math.round(
-                source.height * scale
-            )
+        Math.round(
+            source.height * scale
         );
 
 
@@ -1519,17 +1660,18 @@ function makeHighContrastCanvas(
 
 /* =========================================================
    OCR
+   FIX: status/progress UI is now visible instead of being
+   force-hidden — it's useful evidence that OCR actually ran,
+   and helpful for you to show live during a demo.
 ========================================================= */
 
 async function performOCR(file) {
 
-    /*
-     * The status UI is deliberately hidden.
-     * OCR still happens normally.
-     */
+    scanning.classList.add("active");
 
-    scanning.style.display =
-        "none";
+
+    scanStatus.textContent =
+        "Preparing image...";
 
 
     const prepared =
@@ -1540,6 +1682,10 @@ async function performOCR(file) {
 
     progressBar.style.width =
         "10%";
+
+
+    scanStatus.textContent =
+        "Reading text (pass 1)...";
 
 
     const result1 =
@@ -1577,6 +1723,10 @@ async function performOCR(file) {
         "55%";
 
 
+    scanStatus.textContent =
+        "Reading text (high-contrast pass)...";
+
+
     const contrast =
         makeHighContrastCanvas(
             prepared
@@ -1599,16 +1749,15 @@ async function performOCR(file) {
 
 
     progressBar.style.width =
-        "90%";
+        "80%";
+
+
+    scanStatus.textContent =
+        "Cross-checking...";
 
 
     let text3 = "";
 
-
-    /*
-     * Third pass gives OCR another chance
-     * on difficult photographs.
-     */
 
     try {
 
@@ -1637,6 +1786,20 @@ async function performOCR(file) {
 
     progressBar.style.width =
         "100%";
+
+
+    scanStatus.textContent =
+        "Done.";
+
+
+    setTimeout(
+        function() {
+
+            scanning.classList.remove("active");
+
+        },
+        400
+    );
 
 
     return cleanOCRText(
@@ -1714,47 +1877,18 @@ function findMRP(text) {
 
     const patterns = [
 
-        /*
-         * MRP Rs 190
-         */
-
         /\bM\s*\.?\s*R\s*\.?\s*P\s*\.?\s*(?:[:\-]|IS)?\s*(?:RS\.?|INR|₹)?\s*([0-9]{1,6}(?:\.[0-9]{1,2})?)\b/i,
-
-
-        /*
-         * MRP ... Rs 190
-         */
 
         /\bMRP\b[^\n]{0,80}?(?:RS\.?|INR|₹)\s*([0-9]{1,6}(?:\.[0-9]{1,2})?)/i,
 
-
-        /*
-         * ₹190
-         */
-
         /₹\s*([0-9]{1,6}(?:\.[0-9]{1,2})?)\s*(?:\/\s*-?|\/-)?/i,
 
-
-        /*
-         * Rs 190
-         */
-
         /\bRS\.?\s*([0-9]{1,6}(?:\.[0-9]{1,2})?)\s*(?:\/\s*-?|\/-)?/i,
-
-
-        /*
-         * Maximum Retail Price
-         */
 
         /\b(?:PRICE|MAXIMUM RETAIL PRICE)\b[^\n]{0,60}?(?:RS\.?|INR|₹)?\s*([0-9]{1,6}(?:\.[0-9]{1,2})?)/i
 
     ];
 
-
-    /*
-     * First inspect lines containing
-     * MRP-related words.
-     */
 
     const lines =
         text.split("\n");
@@ -1813,11 +1947,6 @@ function findMRP(text) {
             }
 
 
-            /*
-             * OCR may separate currency
-             * and number.
-             */
-
             const currencyNumber =
                 upper.match(
                     /(?:RS|INR)\.?\s*([0-9]{1,6})/i
@@ -1852,10 +1981,6 @@ function findMRP(text) {
 
     }
 
-
-    /*
-     * Global fallback.
-     */
 
     const clean =
         normalized(
@@ -1906,9 +2031,15 @@ function findMRP(text) {
 
 /* =========================================================
    QUANTITY
+   FIX: now runs on normalized() text so OCR noise (extra
+   spaces, odd dashes) doesn't silently break the match.
 ========================================================= */
 
 function findQuantity(text) {
+
+    const clean =
+        normalized(text);
+
 
     const patterns = [
 
@@ -1924,7 +2055,7 @@ function findQuantity(text) {
     ) {
 
         const match =
-            text.match(
+            clean.match(
                 pattern
             );
 
@@ -1998,9 +2129,14 @@ function findDates(text) {
 
 /* =========================================================
    MANUFACTURER
+   FIX: now runs on normalized() text for the same reason.
 ========================================================= */
 
 function findManufacturer(text) {
+
+    const clean =
+        normalized(text);
+
 
     const patterns = [
 
@@ -2022,7 +2158,7 @@ function findManufacturer(text) {
     ) {
 
         const match =
-            text.match(
+            clean.match(
                 pattern
             );
 
@@ -2316,15 +2452,11 @@ analyseBtn.addEventListener(
             true;
 
 
-        /*
-         * Keep scanning invisible.
-         */
-
-        scanning.style.display =
+        assessment.style.display =
             "none";
 
 
-        assessment.style.display =
+        extractSection.style.display =
             "none";
 
 
@@ -2336,10 +2468,10 @@ analyseBtn.addEventListener(
                 );
 
 
-            /*
-             * OCR text is deliberately
-             * NOT displayed anywhere.
-             */
+            showExtractedText(
+                text
+            );
+
 
             analyseText(
                 text
@@ -2374,8 +2506,7 @@ analyseBtn.addEventListener(
                 false;
 
 
-            scanning.style.display =
-                "none";
+            scanning.classList.remove("active");
 
         }
 
@@ -2552,12 +2683,6 @@ exampleBtn.addEventListener(
     "click",
     function() {
 
-        /*
-         * This is a built-in working example.
-         * It does not need OCR because the purpose
-         * is to demonstrate the final result UI.
-         */
-
         const exampleText = `
 LIPTON
 GREEN TEA
@@ -2593,6 +2718,11 @@ BATCH NO. FAHL02M
 
 
         analyseText(
+            exampleText
+        );
+
+
+        showExtractedText(
             exampleText
         );
 
