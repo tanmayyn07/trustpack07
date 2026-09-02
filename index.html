@@ -145,6 +145,37 @@ h1 {
     display: block;
 }
 
+.example-label-card {
+    display: none;
+    width: 100%;
+    padding: 18px;
+}
+
+.example-label-card .elc-tag {
+    display: inline-block;
+    background: #eef8f3;
+    color: #167050;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.example-label-card .elc-body {
+    border: 1px solid #e0e5ec;
+    border-radius: 10px;
+    background: white;
+    padding: 14px 16px;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    line-height: 1.65;
+    color: #2a3342;
+    white-space: pre-wrap;
+}
+
 .buttons {
     display: flex;
     gap: 9px;
@@ -212,10 +243,24 @@ button:disabled {
 }
 
 .right-header {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 15px;
     margin-bottom: 16px;
+}
+
+.right-header.visible {
+    display: flex;
+}
+
+.right-placeholder {
+    color: #8a94a3;
+    font-size: 13px;
+    padding: 6px 0 16px;
+}
+
+.right-placeholder.hidden {
+    display: none;
 }
 
 .score-circle {
@@ -485,6 +530,14 @@ button:disabled {
                     alt="Label preview"
                 >
 
+                <div
+                    class="example-label-card"
+                    id="exampleLabelCard"
+                >
+                    <span class="elc-tag">Sample label (text demo)</span>
+                    <div class="elc-body" id="exampleLabelBody"></div>
+                </div>
+
             </div>
 
             <div class="buttons">
@@ -609,7 +662,7 @@ button:disabled {
 
         <div class="panel right-panel">
 
-            <div class="right-header">
+            <div class="right-header" id="rightHeader">
 
                 <div
                     class="score-circle"
@@ -633,6 +686,13 @@ button:disabled {
 
                 </div>
 
+            </div>
+
+            <div
+                class="right-placeholder"
+                id="rightPlaceholder"
+            >
+                Results will appear here once you analyse a label.
             </div>
 
 
@@ -1015,8 +1075,44 @@ const extractArrow =
 const extractedTextEl =
     document.getElementById("extractedText");
 
+const rightHeader =
+    document.getElementById("rightHeader");
+
+const rightPlaceholder =
+    document.getElementById("rightPlaceholder");
+
+const exampleLabelCard =
+    document.getElementById("exampleLabelCard");
+
+const exampleLabelBody =
+    document.getElementById("exampleLabelBody");
+
 
 let selectedFile = null;
+
+
+/* =========================================================
+   RESULT PANEL VISIBILITY
+   The score / "Action required" header stays hidden until
+   a label has actually been analysed (real upload or Example).
+========================================================= */
+
+function showResultsPanel() {
+
+    rightHeader.classList.add("visible");
+
+    rightPlaceholder.classList.add("hidden");
+
+}
+
+
+function hideResultsPanel() {
+
+    rightHeader.classList.remove("visible");
+
+    rightPlaceholder.classList.remove("hidden");
+
+}
 
 
 /* =========================================================
@@ -1111,6 +1207,14 @@ function loadFile(file) {
         };
 
 
+    preview.style.display =
+        "block";
+
+
+    exampleLabelCard.style.display =
+        "none";
+
+
     previewContainer.style.display =
         "flex";
 
@@ -1128,6 +1232,9 @@ function loadFile(file) {
 
 
     resetResults();
+
+
+    hideResultsPanel();
 
 }
 
@@ -1212,6 +1319,9 @@ clearBtn.addEventListener(
 
         preview.src = "";
 
+        exampleLabelCard.style.display =
+            "none";
+
         previewContainer.style.display =
             "none";
 
@@ -1232,6 +1342,8 @@ clearBtn.addEventListener(
         extractArrow.textContent = "▾";
 
         resetResults();
+
+        hideResultsPanel();
 
     }
 );
@@ -2478,6 +2590,9 @@ analyseBtn.addEventListener(
             );
 
 
+            showResultsPanel();
+
+
             assessment.style.display =
                 "block";
 
@@ -2706,15 +2821,31 @@ BATCH NO. FAHL02M
         `.trim();
 
 
-        previewContainer.style.display =
-            "none";
-
-
         selectedFile = null;
 
 
         fileInput.value =
             "";
+
+
+        preview.style.display =
+            "none";
+
+
+        preview.src =
+            "";
+
+
+        exampleLabelBody.textContent =
+            exampleText;
+
+
+        exampleLabelCard.style.display =
+            "block";
+
+
+        previewContainer.style.display =
+            "flex";
 
 
         analyseText(
@@ -2725,6 +2856,9 @@ BATCH NO. FAHL02M
         showExtractedText(
             exampleText
         );
+
+
+        showResultsPanel();
 
 
         assessment.style.display =
@@ -2747,6 +2881,8 @@ BATCH NO. FAHL02M
 ========================================================= */
 
 resetResults();
+
+hideResultsPanel();
 
 </script>
 
